@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DDoS Attack Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .panel-transition {
+            transition: all 0.3s ease-in-out;
+        }
+        .tab-active {
+            position: relative;
+        }
+        .tab-active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #3b82f6;
+            border-radius: 3px;
+        }
+        .attack-btn {
+            transition: all 0.2s ease;
+        }
+        .attack-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .attack-btn:active {
+            transform: translateY(0);
+        }
+        .floating-notification {
+            animation: floatUp 0.5s ease-out forwards;
+        }
+        @keyframes floatUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="mb-8 text-center">
+            <h1 class="text-4xl font-bold mb-2 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">DDoS Attack Panel</h1>
+            <p class="text-gray-400">Powerful Layer 7 & Layer 4 attack toolkit</p>
+        </header>
+
+        <!-- Notification Area -->
+        <div id="notification-area" class="fixed top-4 right-4 z-50 w-80 space-y-2"></div>
+
+        <!-- Tabs -->
+        <div class="flex justify-center mb-8">
+            <div class="inline-flex rounded-md shadow-sm" role="group">
+                <button id="layer7-tab" class="px-6 py-3 text-sm font-medium rounded-l-lg bg-blue-600 text-white tab-active">
+                    <i class="fas fa-globe mr-2"></i>Layer 7
+                </button>
+                <button id="layer4-tab" class="px-6 py-3 text-sm font-medium rounded-r-lg bg-gray-700 text-gray-300 hover:bg-gray-600">
+                    <i class="fas fa-network-wired mr-2"></i>Layer 4
+                </button>
+            </div>
+        </div>
+
+        <!-- Layer 7 Panel -->
+        <div id="layer7-panel" class="panel-transition">
+            <div class="bg-gray-800 rounded-xl shadow-lg p-6 mb-8">
+                <h2 class="text-2xl font-semibold mb-4 text-blue-400 flex items-center">
+                    <i class="fas fa-globe mr-2"></i> Layer 7 Attack Configuration
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Target Information -->
+                    <div class="bg-gray-700 p-5 rounded-lg">
+                        <h3 class="text-lg font-medium mb-3 text-blue-300">Target Information</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Target URL</label>
+                                <input type="text" id="l7-target" placeholder="https://example.com" class="w-full px-3 py-2 bg-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Attack Duration (seconds)</label>
+                                <input type="number" id="l7-duration" placeholder="60" class="w-full px-3 py-2 bg-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Attack Options -->
+                    <div class="bg-gray-700 p-5 rounded-lg">
+                        <h3 class="text-lg font-medium mb-3 text-blue-300">Attack Options</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Attack Method</label>
+                                <select id="l7-method" class="w-full px-3 py-2 bg-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="http-flood">HTTP Flood</option>
+                                    <option value="slowloris">Slowloris</option>
+                                    <option value="r-u-dead-yet">R.U.D.Y.</option>
+                                    <option value="goldeneye">GoldenEye</option>
+                                    <option value="https-sound">[PREMIUM] HTTPS SOUND (HTTP/HTTP2) [CloudFlare]</option>
+                                    <option value="sound-v2">[PREMIUM] SOUND-V2 (HTTP/HTTPS/HTTP2) [CloudFlare]</option>
+                                    <option value="https-crypto-v2">[PREMIUM] HTTPS-CRYPTO v2 (HTTPS2)</option>
+                                    <option value="https-request-custom">[PREMIUM] HTTPS REQUEST-CUSTOM (HTTP/HTTP2) [EXPERIENCED USERS ONLY!]</option>
+                                    <option value="https-custom-v2">[ENTERPRISE] HTTPS-CUSTOM v2 (Real Browsers)</option>
+                                    <option value="tor">[PREMIUM] TOR (.onion)</option>
+                                    <option value="socket-v4">[PREMIUM] SOCKET V4 (HTTP/1.1)</option>
+                                    <option value="spammer-v2">[PREMIUM] SPAMMER v2 (HTTPS/1.1)</option>
+                                    <option value="websocket-custom">[PREMIUM] WEBSOCKET-CUSTOM (WS/WSS)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Attack Buttons -->
+                <div class="mt-6 text-center space-x-4">
+                    <button id="l7-attack-btn" class="attack-btn px-8 py-3 bg-red-600 hover:bg-red-700 rounded-lg font-bold text-lg transition-all duration-200 flex items-center mx-auto inline-block">
+                        <i class="fas fa-bolt mr-2"></i> Launch Layer 7 Attack
+                    </button>
+                    <button id="l7-stop-btn" class="hidden attack-btn px-8 py-3 bg-gray-600 hover:bg-gray-500 rounded-lg font-bold text-lg transition-all duration-200 flex items-center mx-auto inline-block">
+                        <i class="fas fa-stop mr-2"></i> Stop Attack
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Attack Logs -->
+            <div class="bg-gray-800 rounded-xl shadow-lg p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-blue-400">
+                    <i class="fas fa-terminal mr-2"></i> Attack Logs
+                </h2>
+                <div id="l7-logs" class="bg-gray-900 rounded-md p-4 h-64 overflow-y-auto font-mono text-sm text-green-400">
+                    <div class="text-gray-500">Waiting for attack to begin...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Layer 4 Panel (Hidden by default) -->
+        <div id="layer4-panel" class="panel-transition hidden">
+            <div class="bg-gray-800 rounded-xl shadow-lg p-6 mb-8">
+                <h2 class="text-2xl font-semibold mb-4 text-purple-400 flex items-center">
+                    <i class="fas fa-network-wired mr-2"></i> Layer 4 Attack Configuration
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Target Information -->
+                    <div class="bg-gray-700 p-5 rounded-lg">
+                        <h3 class="text-lg font-medium mb-3 text-purple-300">Target Information</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Target IP</label>
+                                <input type="text" id="l4-ip" placeholder="192.168.1.1" class="w-full px-3 py-2 bg-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Target Port</label>
+                                <input type="number" id="l4-port" placeholder="80" class="w-full px-3 py-2 bg-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Attack Duration (seconds)</label>
+                                <input type="number" id="l4-duration" placeholder="60" class="w-full px-3 py-2 bg-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Attack Options -->
+                    <div class="bg-gray-700 p-5 rounded-lg">
+                        <h3 class="text-lg font-medium mb-3 text-purple-300">Attack Options</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Attack Method</label>
+                                <select id="l4-method" class="w-full px-3 py-2 bg-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                    <option value="udp-flood">UDP Flood</option>
+                                    <option value="tcp-syn">TCP SYN Flood</option>
+                                    <option value="tcp-ack">TCP ACK Flood</option>
+                                    <option value="icmp-flood">ICMP Flood</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Packet Size (bytes)</label>
+                                <select id="l4-size" class="w-full px-3 py-2 bg-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                    <option value="64">64 (Small)</option>
+                                    <option value="128">128 (Medium)</option>
+                                    <option value="512">512 (Large)</option>
+                                    <option value="1024">1024 (Jumbo)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Threads</label>
+                                <input type="number" id="l4-threads" placeholder="10" class="w-full px-3 py-2 bg-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Attack Buttons -->
+                <div class="mt-6 text-center space-x-4">
+                    <button id="l4-attack-btn" class="attack-btn px-8 py-3 bg-red-600 hover:bg-red-700 rounded-lg font-bold text-lg transition-all duration-200 flex items-center mx-auto inline-block">
+                        <i class="fas fa-bolt mr-2"></i> Launch Layer 4 Attack
+                    </button>
+                    <button id="l4-stop-btn" class="hidden attack-btn px-8 py-3 bg-gray-600 hover:bg-gray-500 rounded-lg font-bold text-lg transition-all duration-200 flex items-center mx-auto inline-block">
+                        <i class="fas fa-stop mr-2"></i> Stop Attack
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Attack Logs -->
+            <div class="bg-gray-800 rounded-xl shadow-lg p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-purple-400">
+                    <i class="fas fa-terminal mr-2"></i> Attack Logs
+                </h2>
+                <div id="l4-logs" class="bg-gray-900 rounded-md p-4 h-64 overflow-y-auto font-mono text-sm text-green-400">
+                    <div class="text-gray-500">Waiting for attack to begin...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login and Plans Buttons -->
+    <div class="fixed top-4 right-4 flex space-x-2">
+        <a href="plans.html" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transition-all duration-200">
+            <i class="fas fa-crown mr-2"></i>Plans
+        </a>
+        <button id="login-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transition-all duration-200">
+            <i class="fas fa-sign-in-alt mr-2"></i>Login
+        </button>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-gray-800 rounded-lg p-6 w-96">
+            <h3 class="text-xl font-bold mb-4 text-blue-400">Login</h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-1">Nickname</label>
+                    <input type="text" id="login-nickname" class="w-full px-3 py-2 bg-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Password</label>
+                    <input type="password" id="login-password" class="w-full px-3 py-2 bg-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div id="login-error" class="hidden text-red-500 text-sm"></div>
+                <div class="flex justify-end space-x-3 pt-2">
+                    <button id="login-cancel" class="px-4 py-2 bg-gray-600 hover:bg-gray-500 rounded-md">Cancel</button>
+                    <button id="login-submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-md">Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab Switching
+        const layer7Tab = document.getElementById('layer7-tab');
+        const layer4Tab = document.getElementById('layer4-tab');
+        const layer7Panel = document.getElementById('layer7-panel');
+        const layer4Panel = document.getElementById('layer4-panel');
+
+        layer7Tab.addEventListener('click', () => {
+            layer7Panel.classList.remove('hidden');
+            layer4Panel.classList.add('hidden');
+            layer7Tab.classList.add('tab-active', 'bg-blue-600', 'text-white');
+            layer7Tab.classList.remove('bg-gray-700', 'text-gray-300');
+            layer4Tab.classList.add('bg-gray-700', 'text-gray-300');
+            layer4Tab.classList.remove('tab-active', 'bg-blue-600', 'text-white');
+        });
+
+        layer4Tab.addEventListener('click', () => {
+            layer4Panel.classList.remove('hidden');
+            layer7Panel.classList.add('hidden');
+            layer4Tab.classList.add('tab-active', 'bg-blue-600', 'text-white');
+            layer4Tab.classList.remove('bg-gray-700', 'text-gray-300');
+            layer7Tab.classList.add('bg-gray-700', 'text-gray-300');
+            layer7Tab.classList.remove('tab-active', 'bg-blue-600', 'text-white');
+        });
+
+        // Notification system
+        function showNotification(type, message) {
+            const notificationArea = document.getElementById('notification-area');
+            const notification = document.createElement('div');
+            notification.className = `floating-notification p-4 rounded-md shadow-lg ${type === 'success' ? 'bg-green-600' : 'bg-red-600'}`;
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle'} mr-2"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            notificationArea.appendChild(notification);
+            
+            // Remove notification after 5 seconds
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+
+        // Track active attacks
+        const activeAttacks = {
+            l7: null,
+            l4: null
+        };
+
+        // Attack simulation (for demo purposes)
+        function simulateAttack(type) {
+            // Hide launch button, show stop button
+            document.getElementById(`${type}-attack-btn`).classList.add('hidden');
+            document.getElementById(`${type}-stop-btn`).classList.remove('hidden');
+            const target = type === 'l7' ? document.getElementById('l7-target').value : document.getElementById('l4-ip').value;
+            const duration = type === 'l7' ? document.getElementById('l7-duration').value : document.getElementById('l4-duration').value;
+            const method = type === 'l7' ? document.getElementById('l7-method').value : document.getElementById('l4-method').value;
+            
+            if (!target) {
+                showNotification('error', 'Please enter a target!');
+                return;
+            }
+            
+            if (!duration || duration < 1) {
+                showNotification('error', 'Please enter a valid duration!');
+                return;
+            }
+            
+            showNotification('success', `${type === 'l7' ? 'Layer 7' : 'Layer 4'} attack started against ${target}`);
+            
+            const logElement = type === 'l7' ? document.getElementById('l7-logs') : document.getElementById('l4-logs');
+            logElement.innerHTML = '';
+            
+            const methods = {
+                'l7': {
+                    'http-flood': 'HTTP Flood',
+                    'slowloris': 'Slowloris',
+                    'r-u-dead-yet': 'R.U.D.Y.',
+                    'goldeneye': 'GoldenEye'
+                },
+                'l4': {
+                    'udp-flood': 'UDP Flood',
+                    'tcp-syn': 'TCP SYN Flood',
+                    'tcp-ack': 'TCP ACK Flood',
+                    'icmp-flood': 'ICMP Flood'
+                }
+            };
+            
+            const attackName = methods[type][method];
+            
+            // Simulate attack logs
+            const messages = [
+                `[${new Date().toLocaleTimeString()}] Initializing ${attackName} attack...`,
+                `[${new Date().toLocaleTimeString()}] Target: ${target}`,
+                `[${new Date().toLocaleTimeString()}] Duration: ${duration} seconds`,
+                `[${new Date().toLocaleTimeString()}] Spawning attack threads...`,
+                `[${new Date().toLocaleTimeString()}] Attack in progress...`,
+                `[${new Date().toLocaleTimeString()}] Sending packets/requests...`,
+                `[${new Date().toLocaleTimeString()}] Monitoring target response...`
+            ];
+            
+            let delay = 0;
+            messages.forEach(msg => {
+                setTimeout(() => {
+                    const logEntry = document.createElement('div');
+                    logEntry.textContent = msg;
+                    logElement.appendChild(logEntry);
+                    logElement.scrollTop = logElement.scrollHeight;
+                }, delay);
+                delay += 800;
+            });
+            
+            // Store timeout ID so we can cancel it
+            activeAttacks[type] = setTimeout(() => {
+                const completeMsg = `[${new Date().toLocaleTimeString()}] Attack completed successfully!`;
+                const logEntry = document.createElement('div');
+                logEntry.textContent = completeMsg;
+                logEntry.className = 'text-green-500 font-bold';
+                logElement.appendChild(logEntry);
+                logElement.scrollTop = logElement.scrollHeight;
+                showNotification('success', 'Attack completed successfully!');
+                
+                // Reset buttons
+                document.getElementById(`${type}-attack-btn`).classList.remove('hidden');
+                document.getElementById(`${type}-stop-btn`).classList.add('hidden');
+                activeAttacks[type] = null;
+            }, duration * 1000);
+        }
+
+        // Stop attack function
+        function stopAttack(type) {
+            if (activeAttacks[type]) {
+                clearTimeout(activeAttacks[type]);
+                activeAttacks[type] = null;
+                
+                const logElement = type === 'l7' ? document.getElementById('l7-logs') : document.getElementById('l4-logs');
+                const stoppedMsg = `[${new Date().toLocaleTimeString()}] Attack stopped by user!`;
+                const logEntry = document.createElement('div');
+                logEntry.textContent = stoppedMsg;
+                logEntry.className = 'text-yellow-500 font-bold';
+                logElement.appendChild(logEntry);
+                logElement.scrollTop = logElement.scrollHeight;
+                
+                showNotification('info', `${type === 'l7' ? 'Layer 7' : 'Layer 4'} attack stopped`);
+                
+                // Reset buttons
+                document.getElementById(`${type}-attack-btn`).classList.remove('hidden');
+                document.getElementById(`${type}-stop-btn`).classList.add('hidden');
+            }
+        }
+
+        // Attack button handlers
+        document.getElementById('l7-attack-btn').addEventListener('click', () => {
+            showNotification('error', 'You need to have valid plan to login. <a href="plans.html" class="text-blue-400 hover:underline">View Plans</a>');
+        });
+        document.getElementById('l4-attack-btn').addEventListener('click', () => simulateAttack('l4'));
+        document.getElementById('l7-stop-btn').addEventListener('click', () => stopAttack('l7'));
+        document.getElementById('l4-stop-btn').addEventListener('click', () => stopAttack('l4'));
+
+        // Login Modal Handling
+        const loginBtn = document.getElementById('login-btn');
+        const loginModal = document.getElementById('login-modal');
+        const loginCancel = document.getElementById('login-cancel');
+        const loginSubmit = document.getElementById('login-submit');
+        const loginError = document.getElementById('login-error');
+
+        loginBtn.addEventListener('click', () => {
+            loginModal.classList.remove('hidden');
+        });
+
+        loginCancel.addEventListener('click', () => {
+            loginModal.classList.add('hidden');
+            loginError.classList.add('hidden');
+        });
+
+        loginSubmit.addEventListener('click', () => {
+            const nickname = document.getElementById('login-nickname').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (!nickname || !password) {
+                loginError.textContent = 'Please enter both nickname and password';
+                loginError.classList.remove('hidden');
+                return;
+            }
+
+            // Always show plan required error
+            loginError.innerHTML = 'You need to have valid plan to login. <a href="plans.html" class="text-blue-400 hover:underline">View Plans</a>';
+            loginError.classList.remove('hidden');
+        });
+
+        // Close modal when clicking outside
+        loginModal.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.classList.add('hidden');
+                loginError.classList.add('hidden');
+            }
+        });
+
+        // Initialize with some demo values
+        document.getElementById('l7-target').value = '';
+        document.getElementById('l7-duration').value = '30';
+        document.getElementById('l4-ip').value = '192.168.1.1';
+        document.getElementById('l4-port').value = '80';
+        document.getElementById('l4-duration').value = '30';
+    </script>
+</body>
+</html>
