@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DDoS Attack Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .panel-transition {
+            transition: all 0.3s ease-in-out;
+        }
+        .tab-active {
+            position: relative;
+        }
+        .tab-active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #3b82f6;
+            border-radius: 3px;
+        }
+        .attack-btn {
+            transition: all 0.2s ease;
+        }
+        .attack-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .attack-btn:active {
+            transform: translateY(0);
+        }
+        .floating-notification {
+            animation: floatUp 0.5s ease-out forwards;
+        }
+        @keyframes floatUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="mb-8 text-center">
+            <h1 class="text-4xl font-bold mb-2 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">DDoS Attack Panel</h1>
+            <p class="text-gray-400">Powerful Layer 7 & Layer 4 attack toolkit</p>
+            <div class="mt-4 flex justify-center gap-4">
+                <div class="inline-block border border-blue-500 rounded-lg p-4 w-64">
+                    <div class="text-center">
+                        <h3 class="text-xl font-bold text-blue-400">PLAN 1</h3>
+                        <p class="text-gray-300">Layer 7</p>
+                        <p class="text-2xl font-bold my-2">$29 <span class="text-sm text-gray-400">/ 30 days</span></p>
+                        <ul class="text-left text-sm space-y-1 mb-4">
+                            <li>Max. 1200 seconds</li>
+                            <li>2 concurrents</li>
+                            <li>10 methods</li>
+                            <li>API: <span class="text-red-500">X</span></li>
+                            <li>VIP Network: <span class="text-red-500">X</span></li>
+                        </ul>
+                        <button onclick="window.location.href='https://geop.sellhub.cx/'" class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Buy Now
+                        </button>
+                    </div>
+                </div>
+                <div class="inline-block border border-blue-500 rounded-lg p-4 w-64">
+                    <div class="text-center">
+                        <h3 class="text-xl font-bold text-blue-400">PLAN 2</h3>
+                        <p class="text-gray-300">Layer 7</p>
+                        <p class="text-2xl font-bold my-2">$59 <span class="text-sm text-gray-400">/ 30 days</span></p>
+                        <ul class="text-left text-sm space-y-1 mb-4">
+                            <li>Max. 2400 seconds</li>
+                            <li>4 concurrents</li>
+                            <li>10 methods</li>
+                            <li>API: <span class="text-red-500">X</span></li>
+                            <li>VIP Network: <span class="text-red-500">X</span></li>
+                        </ul>
+                        <button onclick="window.location.href='https://geop.sellhub.cx/'" class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Buy Now
+                        </button>
+                    </div>
+                </div>
+                <div class="inline-block border border-blue-500 rounded-lg p-4 w-64">
+                    <div class="text-center">
+                        <h3 class="text-xl font-bold text-blue-400">PLAN 3</h3>
+                        <p class="text-gray-300">Layer 7</p>
+                        <p class="text-2xl font-bold my-2">$99 <span class="text-sm text-gray-400">/ 30 days</span></p>
+                        <ul class="text-left text-sm space-y-1 mb-4">
+                            <li>Max. 3600 seconds</li>
+                            <li>6 concurrents</li>
+                            <li>10 methods</li>
+                            <li>API: <span class="text-red-500">X</span></li>
+                            <li>VIP Network: <span class="text-red-500">X</span></li>
+                        </ul>
+                        <button onclick="window.location.href='https://geop.sellhub.cx/'" class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Buy Now
+                        </button>
+                    </div>
+                </div>
+                <div class="inline-block border border-blue-500 rounded-lg p-4 w-64">
+                    <div class="text-center">
+                        <h3 class="text-xl font-bold text-blue-400">PLAN 4</h3>
+                        <p class="text-gray-300">Layer 7</p>
+                        <p class="text-2xl font-bold my-2">$149 <span class="text-sm text-gray-400">/ 30 days</span></p>
+                        <ul class="text-left text-sm space-y-1 mb-4">
+                            <li>Max. 5000 seconds</li>
+                            <li>8 concurrents</li>
+                            <li>10 methods</li>
+                            <li>API: <span class="text-red-500">X</span></li>
+                            <li>VIP Network: <span class="text-red-500">X</span></li>
+                        </ul>
+                        <button onclick="window.location.href='https://geop.sellhub.cx/'" class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Buy Now
+                        </button>
+                    </div>
+                </div>
+                </div>
+                <div class="flex justify-center gap-4 mt-4">
+                    <div class="inline-block border border-blue-500 rounded-lg p-4 w-64">
+                        <div class="text-center">
+                            <h3 class="text-xl font-bold text-blue-400">PLAN 5</h3>
+                            <p class="text-gray-300">Layer 7</p>
+                            <p class="text-2xl font-bold my-2">$199 <span class="text-sm text-gray-400">/ 30 days</span></p>
+                            <ul class="text-left text-sm space-y-1 mb-4">
+                                <li>Max. 10000 seconds</li>
+                                <li>10 concurrents</li>
+                                <li>10 methods</li>
+                                <li>API: <span class="text-green-500">✓</span></li>
+                                <li>VIP Network: <span class="text-green-500">✓</span></li>
+                            </ul>
+                            <button onclick="window.location.href='https://geop.sellhub.cx/'" class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Buy Now
+                            </button>
+                        </div>
+                    </div>
+                    <div class="inline-block border border-blue-500 rounded-lg p-4 w-64">
+                        <div class="text-center">
+                            <h3 class="text-xl font-bold text-blue-400">PLAN 6</h3>
+                            <p class="text-gray-300">Layer 7</p>
+                            <p class="text-2xl font-bold my-2">$299 <span class="text-sm text-gray-400">/ 30 days</span></p>
+                            <ul class="text-left text-sm space-y-1 mb-4">
+                                <li>Max. 10000 seconds</li>
+                                <li>15 concurrents</li>
+                                <li>15 methods</li>
+                                <li>API: <span class="text-green-500">✓</span></li>
+                                <li>VIP Network: <span class="text-green-500">✓</span></li>
+                            </ul>
+                            <button onclick="window.location.href='https://geop.sellhub.cx/'" class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Buy Now
+                            </button>
+                        </div>
+                    </div>
+                    <div class="inline-block border border-blue-500 rounded-lg p-4 w-64">
+                        <div class="text-center">
+                            <h3 class="text-xl font-bold text-blue-400">PLAN 7</h3>
+                            <p class="text-gray-300">Layer 7</p>
+                            <p class="text-2xl font-bold my-2">$399 <span class="text-sm text-gray-400">/ 30 days</span></p>
+                            <ul class="text-left text-sm space-y-1 mb-4">
+                                <li>Max. 20000 seconds</li>
+                                <li>20 concurrents</li>
+                                <li>20 methods</li>
+                                <li>API: <span class="text-green-500">✓</span></li>
+                                <li>BOTNET Network: <span class="text-green-500">✓</span></li>
+                            </ul>
+                            <button onclick="window.location.href='https://geop.sellhub.cx/'" class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Buy Now
+                            </button>
+                        </div>
+                    </div>
+                    <div class="inline-block border border-blue-500 rounded-lg p-4 w-64">
+                        <div class="text-center">
+                            <h3 class="text-xl font-bold text-blue-400">PLAN 8</h3>
+                            <p class="text-gray-300">Layer 7</p>
+                            <p class="text-2xl font-bold my-2">$499 <span class="text-sm text-gray-400">/ 30 days</span></p>
+                            <ul class="text-left text-sm space-y-1 mb-4">
+                                <li>Max. 25000 seconds</li>
+                                <li>30 concurrents</li>
+                                <li>All methods</li>
+                                <li>API: <span class="text-green-500">✓</span></li>
+                                <li>BOTNET Network: <span class="text-green-500">✓</span></li>
+                            </ul>
+                            <button onclick="window.location.href='https://geop.sellhub.cx/'" class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Buy Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Notification Area -->
+        <div id="notification-area" class="fixed top-4 right-4 z-50 w-80 space-y-2"></div>
+
+    <!-- Login and Plans Buttons -->
+    <div class="fixed top-4 right-4 flex space-x-2">
+        <a href="index.html" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transition-all duration-200">
+            <i class="fas fa-home mr-2"></i>Home
+        </a>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-gray-800 rounded-lg p-6 w-96">
+            <h3 class="text-xl font-bold mb-4 text-blue-400">Login</h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-1">Nickname</label>
+                    <input type="text" id="login-nickname" class="w-full px-3 py-2 bg-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Password</label>
+                    <input type="password" id="login-password" class="w-full px-3 py-2 bg-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div id="login-error" class="hidden text-red-500 text-sm"></div>
+                <div class="flex justify-end space-x-3 pt-2">
+                    <button id="login-cancel" class="px-4 py-2 bg-gray-600 hover:bg-gray-500 rounded-md">Cancel</button>
+                    <button id="login-submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-md">Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab Switching
+        const layer7Tab = document.getElementById('layer7-tab');
+        const layer4Tab = document.getElementById('layer4-tab');
+        const layer7Panel = document.getElementById('layer7-panel');
+        const layer4Panel = document.getElementById('layer4-panel');
+
+        layer7Tab.addEventListener('click', () => {
+            layer7Panel.classList.remove('hidden');
+            layer4Panel.classList.add('hidden');
+            layer7Tab.classList.add('tab-active', 'bg-blue-600', 'text-white');
+            layer7Tab.classList.remove('bg-gray-700', 'text-gray-300');
+            layer4Tab.classList.add('bg-gray-700', 'text-gray-300');
+            layer4Tab.classList.remove('tab-active', 'bg-blue-600', 'text-white');
+        });
+
+        layer4Tab.addEventListener('click', () => {
+            layer4Panel.classList.remove('hidden');
+            layer7Panel.classList.add('hidden');
+            layer4Tab.classList.add('tab-active', 'bg-blue-600', 'text-white');
+            layer4Tab.classList.remove('bg-gray-700', 'text-gray-300');
+            layer7Tab.classList.add('bg-gray-700', 'text-gray-300');
+            layer7Tab.classList.remove('tab-active', 'bg-blue-600', 'text-white');
+        });
+
+        // Notification system
+        function showNotification(type, message) {
+            const notificationArea = document.getElementById('notification-area');
+            const notification = document.createElement('div');
+            notification.className = `floating-notification p-4 rounded-md shadow-lg ${type === 'success' ? 'bg-green-600' : 'bg-red-600'}`;
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle'} mr-2"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            notificationArea.appendChild(notification);
+            
+            // Remove notification after 5 seconds
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+
+        // Track active attacks
+        const activeAttacks = {
+            l7: null,
+            l4: null
+        };
+
+        // Attack simulation (for demo purposes)
+        function simulateAttack(type) {
+            // Hide launch button, show stop button
+            document.getElementById(`${type}-attack-btn`).classList.add('hidden');
+            document.getElementById(`${type}-stop-btn`).classList.remove('hidden');
+            const target = type === 'l7' ? document.getElementById('l7-target').value : document.getElementById('l4-ip').value;
+            const duration = type === 'l7' ? document.getElementById('l7-duration').value : document.getElementById('l4-duration').value;
+            const method = type === 'l7' ? document.getElementById('l7-method').value : document.getElementById('l4-method').value;
+            
+            if (!target) {
+                showNotification('error', 'Please enter a target!');
+                return;
+            }
+            
+            if (!duration || duration < 1) {
+                showNotification('error', 'Please enter a valid duration!');
+                return;
+            }
+            
+            showNotification('success', `${type === 'l7' ? 'Layer 7' : 'Layer 4'} attack started against ${target}`);
+            
+            const logElement = type === 'l7' ? document.getElementById('l7-logs') : document.getElementById('l4-logs');
+            logElement.innerHTML = '';
+            
+            const methods = {
+                'l7': {
+                    'http-flood': 'HTTP Flood',
+                    'slowloris': 'Slowloris',
+                    'r-u-dead-yet': 'R.U.D.Y.',
+                    'goldeneye': 'GoldenEye'
+                },
+                'l4': {
+                    'udp-flood': 'UDP Flood',
+                    'tcp-syn': 'TCP SYN Flood',
+                    'tcp-ack': 'TCP ACK Flood',
+                    'icmp-flood': 'ICMP Flood'
+                }
+            };
+            
+            const attackName = methods[type][method];
+            
+            // Simulate attack logs
+            const messages = [
+                `[${new Date().toLocaleTimeString()}] Initializing ${attackName} attack...`,
+                `[${new Date().toLocaleTimeString()}] Target: ${target}`,
+                `[${new Date().toLocaleTimeString()}] Duration: ${duration} seconds`,
+                `[${new Date().toLocaleTimeString()}] Spawning attack threads...`,
+                `[${new Date().toLocaleTimeString()}] Attack in progress...`,
+                `[${new Date().toLocaleTimeString()}] Sending packets/requests...`,
+                `[${new Date().toLocaleTimeString()}] Monitoring target response...`
+            ];
+            
+            let delay = 0;
+            messages.forEach(msg => {
+                setTimeout(() => {
+                    const logEntry = document.createElement('div');
+                    logEntry.textContent = msg;
+                    logElement.appendChild(logEntry);
+                    logElement.scrollTop = logElement.scrollHeight;
+                }, delay);
+                delay += 800;
+            });
+            
+            // Store timeout ID so we can cancel it
+            activeAttacks[type] = setTimeout(() => {
+                const completeMsg = `[${new Date().toLocaleTimeString()}] Attack completed successfully!`;
+                const logEntry = document.createElement('div');
+                logEntry.textContent = completeMsg;
+                logEntry.className = 'text-green-500 font-bold';
+                logElement.appendChild(logEntry);
+                logElement.scrollTop = logElement.scrollHeight;
+                showNotification('success', 'Attack completed successfully!');
+                
+                // Reset buttons
+                document.getElementById(`${type}-attack-btn`).classList.remove('hidden');
+                document.getElementById(`${type}-stop-btn`).classList.add('hidden');
+                activeAttacks[type] = null;
+            }, duration * 1000);
+        }
+
+        // Stop attack function
+        function stopAttack(type) {
+            if (activeAttacks[type]) {
+                clearTimeout(activeAttacks[type]);
+                activeAttacks[type] = null;
+                
+                const logElement = type === 'l7' ? document.getElementById('l7-logs') : document.getElementById('l4-logs');
+                const stoppedMsg = `[${new Date().toLocaleTimeString()}] Attack stopped by user!`;
+                const logEntry = document.createElement('div');
+                logEntry.textContent = stoppedMsg;
+                logEntry.className = 'text-yellow-500 font-bold';
+                logElement.appendChild(logEntry);
+                logElement.scrollTop = logElement.scrollHeight;
+                
+                showNotification('info', `${type === 'l7' ? 'Layer 7' : 'Layer 4'} attack stopped`);
+                
+                // Reset buttons
+                document.getElementById(`${type}-attack-btn`).classList.remove('hidden');
+                document.getElementById(`${type}-stop-btn`).classList.add('hidden');
+            }
+        }
+
+        // Attack button handlers
+        document.getElementById('l7-attack-btn').addEventListener('click', () => simulateAttack('l7'));
+        document.getElementById('l4-attack-btn').addEventListener('click', () => simulateAttack('l4'));
+        document.getElementById('l7-stop-btn').addEventListener('click', () => stopAttack('l7'));
+        document.getElementById('l4-stop-btn').addEventListener('click', () => stopAttack('l4'));
+
+        // Login Modal Handling
+        const loginBtn = document.getElementById('login-btn');
+        const loginModal = document.getElementById('login-modal');
+        const loginCancel = document.getElementById('login-cancel');
+        const loginSubmit = document.getElementById('login-submit');
+        const loginError = document.getElementById('login-error');
+
+        loginBtn.addEventListener('click', () => {
+            loginModal.classList.remove('hidden');
+        });
+
+        loginCancel.addEventListener('click', () => {
+            loginModal.classList.add('hidden');
+            loginError.classList.add('hidden');
+        });
+
+        loginSubmit.addEventListener('click', () => {
+            const nickname = document.getElementById('login-nickname').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (!nickname || !password) {
+                loginError.textContent = 'Please enter both nickname and password';
+                loginError.classList.remove('hidden');
+                return;
+            }
+
+            // Always show plan required error
+            loginError.innerHTML = 'You need to have valid plan to login. <a href="index.html" class="text-blue-400 hover:underline">View Plans</a>';
+            loginError.classList.remove('hidden');
+        });
+
+        // Close modal when clicking outside
+        loginModal.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.classList.add('hidden');
+                loginError.classList.add('hidden');
+            }
+        });
+
+        // Initialize with some demo values
+        document.getElementById('l7-target').value = 'https://example.com';
+        document.getElementById('l7-duration').value = '30';
+        document.getElementById('l4-ip').value = '192.168.1.1';
+        document.getElementById('l4-port').value = '80';
+        document.getElementById('l4-duration').value = '30';
+    </script>
+</body>
+</html>
